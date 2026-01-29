@@ -25,6 +25,20 @@ This file contains the specification of all supported encodings.
 Unless otherwise stated in page or encoding documentation, any encoding can be
 used with any page type.
 
+### Supported Encodings
+
+| Encoding type                                    | Encoding enum                     | Encoding Targets <br> (Parquet 2.0.0+)                                              | Encoding Targets <br> (Parquet 1.0.0+) |
+| ------------------------------------------------ | --------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
+| [Plain](#PLAIN)                                  | PLAIN = 0                         | All Physical Types <br> Dictionary entries in dictionary page                       | All Physical Types                     |
+| [Dictionary Encoding (Plain)](#DICTIONARY)       | PLAIN_DICTIONARY = 2              | Deprecated                                                                          | All Physical Types                     |
+| [Run Length Encoding / Bit-Packing Hybrid](#RLE) | RLE = 3                           | BOOLEAN <br> Repetition and definition levels <br> Dictionary indices in data pages | Repetition and definition levels       |
+| [Bit-packed](#BITPACKED)                         | BIT_PACKED = 4                    | Deprecated                                                                          | Repetition and definition levels       |
+| [Delta Encoding](#DELTA)                         | DELTA_BINARY_PACKED = 5           | INT32, INT64                                                                        | N/A                                    |
+| [Delta-length byte array](#DELTALENGTH)          | DELTA_LENGTH_BYTE_ARRAY = 6       | BYTE_ARRAY                                                                          | N/A                                    |
+| [Delta Strings](#DELTASTRING)                    | DELTA_BYTE_ARRAY = 7              | BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY                                                    | N/A                                    |
+| [Dictionary Encoding (RLE)](#DICTIONARY)         | RLE_DICTIONARY = 8                | All Physical Types                                                                  | N/A                                    |
+| [Byte Stream Split](#BYTESTREAMSPLIT)            | BYTE_STREAM_SPLIT = 9             | FLOAT, DOUBLE (2.8.0+) <br> INT32, INT64, FIXED_LEN_BYTE_ARRAY (2.11.0+)            | N/A                                    |
+
 <a name="PLAIN"></a>
 ### Plain: (PLAIN = 0)
 
@@ -50,6 +64,7 @@ For native types, this outputs the data as little endian. Floating
 For the byte array type, it encodes the length as a 4 byte little
 endian, followed by the bytes.
 
+<a name="DICTIONARY"></a>
 ### Dictionary Encoding (PLAIN_DICTIONARY = 2 and RLE_DICTIONARY = 8)
 The dictionary encoding builds a dictionary of values encountered in a given column. The
 dictionary will be stored in a dictionary page per column chunk. The values are stored as integers
@@ -174,7 +189,7 @@ bit label: ABCDEFGH IJKLMNOP QRSTUVWX
 Note that the BIT_PACKED encoding method is only supported for encoding
 repetition and definition levels.
 
-<a name="DELTAENC"></a>
+<a name="DELTA"></a>
 ### Delta Encoding (DELTA_BINARY_PACKED = 5)
 Supported Types: INT32, INT64
 
@@ -295,6 +310,7 @@ The encoded data is
 This encoding is similar to the [RLE/bit-packing](#RLE) encoding. However the [RLE/bit-packing](#RLE) encoding is specifically used when the range of ints is small over the entire page, as is true of repetition and definition levels. It uses a single bit width for the whole page.
 The delta encoding algorithm described above stores a bit width per miniblock and is less sensitive to variations in the size of encoded integers. It is also somewhat doing RLE encoding as a block containing all the same values will be bit packed to a zero bit width thus being only a header.
 
+<a name="DELTALENGTH"></a>
 ### Delta-length byte array: (DELTA_LENGTH_BYTE_ARRAY = 6)
 
 Supported Types: BYTE_ARRAY
@@ -317,6 +333,7 @@ then the encoded data would be comprised of the following segments:
 - DeltaEncoding(5, 5, 6, 6) (the string lengths)
 - "HelloWorldFoobarABCDEF"
 
+<a name="DELTASTRING"></a>
 ### Delta Strings: (DELTA_BYTE_ARRAY = 7)
 
 Supported Types: BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY
@@ -338,6 +355,7 @@ then the encoded data would be comprised of the following segments:
 
 Note that, even for FIXED_LEN_BYTE_ARRAY, all lengths are encoded despite the redundancy.
 
+<a name="BYTESTREAMSPLIT"></a>
 ### Byte Stream Split: (BYTE_STREAM_SPLIT = 9)
 
 Supported Types: FLOAT, DOUBLE, INT32, INT64, FIXED_LEN_BYTE_ARRAY
@@ -366,3 +384,4 @@ After applying the transformation, the data has the following representation:
 ```
 Bytes  AA 00 A3 BB 11 B4 CC 22 C5 DD 33 D6
 ```
+
