@@ -33,7 +33,7 @@ used with any page type.
 | [Dictionary Encoding (Plain)](#DICTIONARY)       | PLAIN_DICTIONARY = 2              | Deprecated                                                                          | All Physical Types                     |
 | [Run Length Encoding / Bit-Packing Hybrid](#RLE) | RLE = 3                           | BOOLEAN <br> Repetition and definition levels <br> Dictionary indices in data pages | Repetition and definition levels       |
 | [Bit-packed](#BITPACKED)                         | BIT_PACKED = 4                    | Deprecated                                                                          | Repetition and definition levels       |
-| [Delta Encoding](#DELTA)                         | DELTA_BINARY_PACKED = 5           | INT32, INT64                                                                        | N/A                                    |
+| [Delta Encoding](#DELTAENC)                      | DELTA_BINARY_PACKED = 5           | INT32, INT64                                                                        | N/A                                    |
 | [Delta-length byte array](#DELTALENGTH)          | DELTA_LENGTH_BYTE_ARRAY = 6       | BYTE_ARRAY                                                                          | N/A                                    |
 | [Delta Strings](#DELTASTRING)                    | DELTA_BYTE_ARRAY = 7              | BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY                                                    | N/A                                    |
 | [Dictionary Encoding (RLE)](#DICTIONARY)         | RLE_DICTIONARY = 8                | All Physical Types                                                                  | N/A                                    |
@@ -189,7 +189,7 @@ bit label: ABCDEFGH IJKLMNOP QRSTUVWX
 Note that the BIT_PACKED encoding method is only supported for encoding
 repetition and definition levels.
 
-<a name="DELTA"></a>
+<a name="DELTAENC"></a>
 ### Delta Encoding (DELTA_BINARY_PACKED = 5)
 Supported Types: INT32, INT64
 
@@ -384,4 +384,3 @@ After applying the transformation, the data has the following representation:
 ```
 Bytes  AA 00 A3 BB 11 B4 CC 22 C5 DD 33 D6
 ```
-
