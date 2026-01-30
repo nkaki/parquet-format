@@ -27,17 +27,22 @@ used with any page type.
 
 ### Supported Encodings
 
-| Encoding type                                    | Encoding enum                     | Encoding Targets <br> (Parquet 2.0.0+)                                              | Encoding Targets <br> (Parquet 1.0.0+) |
-| ------------------------------------------------ | --------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
-| [Plain](#PLAIN)                                  | PLAIN = 0                         | All Physical Types <br> Dictionary entries in dictionary page                       | All Physical Types                     |
-| [Dictionary Encoding (Plain)](#DICTIONARY)       | PLAIN_DICTIONARY = 2              | Deprecated                                                                          | All Physical Types                     |
-| [Run Length Encoding / Bit-Packing Hybrid](#RLE) | RLE = 3                           | BOOLEAN <br> Repetition and definition levels <br> Dictionary indices in data pages | Repetition and definition levels       |
-| [Bit-packed](#BITPACKED)                         | BIT_PACKED = 4                    | Deprecated                                                                          | Repetition and definition levels       |
-| [Delta Encoding](#DELTAENC)                      | DELTA_BINARY_PACKED = 5           | INT32, INT64                                                                        | N/A                                    |
-| [Delta-length byte array](#DELTALENGTH)          | DELTA_LENGTH_BYTE_ARRAY = 6       | BYTE_ARRAY                                                                          | N/A                                    |
-| [Delta Strings](#DELTASTRING)                    | DELTA_BYTE_ARRAY = 7              | BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY                                                    | N/A                                    |
-| [Dictionary Encoding (RLE)](#DICTIONARY)         | RLE_DICTIONARY = 8                | All Physical Types                                                                  | N/A                                    |
-| [Byte Stream Split](#BYTESTREAMSPLIT)            | BYTE_STREAM_SPLIT = 9             | FLOAT, DOUBLE (2.8.0+) <br> INT32, INT64, FIXED_LEN_BYTE_ARRAY (2.11.0+)            | N/A                                    |
+| Encoding type                                    | Encoding enum                                             | Supported Types                                  |
+| ------------------------------------------------ | --------------------------------------------------------- | ------------------------------------------------ |
+| [Plain](#PLAIN)                                  | PLAIN = 0                                                 | All Physical Types                               |
+| [Dictionary Encoding](#DICTIONARY)               | PLAIN_DICTIONARY = 2 (Deprecated) <br> RLE_DICTIONARY = 8 | All Physical Types                               |
+| [Run Length Encoding / Bit-Packing Hybrid](#RLE) | RLE = 3                                                   | BOOLEAN                                          |
+| [Delta Encoding](#DELTAENC)                      | DELTA_BINARY_PACKED = 5                                   | INT32, INT64                                     |
+| [Delta-length byte array](#DELTALENGTH)          | DELTA_LENGTH_BYTE_ARRAY = 6                               | BYTE_ARRAY                                       |
+| [Delta Strings](#DELTASTRING)                    | DELTA_BYTE_ARRAY = 7                                      | BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY                 |
+| [Byte Stream Split](#BYTESTREAMSPLIT)            | BYTE_STREAM_SPLIT = 9                                     | INT32, INT64, FLOAT, DOUBLE FIXED_LEN_BYTE_ARRAY |
+
+### Deprecated Encodings
+
+| Encoding type                         | Encoding enum  |
+| ------------------------------------- | -------------- |
+| [Bit-packed (Deprecated)](#BITPACKED) | BIT_PACKED = 4 |
+
 
 <a name="PLAIN"></a>
 ### Plain: (PLAIN = 0)
