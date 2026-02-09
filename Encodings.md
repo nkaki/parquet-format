@@ -35,7 +35,7 @@ used with any page type.
 | [Delta Encoding](#DELTAENC)                      | DELTA_BINARY_PACKED = 5                                   | INT32, INT64                                     |
 | [Delta-length byte array](#DELTALENGTH)          | DELTA_LENGTH_BYTE_ARRAY = 6                               | BYTE_ARRAY                                       |
 | [Delta Strings](#DELTASTRING)                    | DELTA_BYTE_ARRAY = 7                                      | BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY                 |
-| [Byte Stream Split](#BYTESTREAMSPLIT)            | BYTE_STREAM_SPLIT = 9                                     | INT32, INT64, FLOAT, DOUBLE FIXED_LEN_BYTE_ARRAY |
+| [Byte Stream Split](#BYTESTREAMSPLIT)            | BYTE_STREAM_SPLIT = 9                                     | INT32, INT64, FLOAT, DOUBLE, FIXED_LEN_BYTE_ARRAY |
 
 ### Deprecated Encodings
 
